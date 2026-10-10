@@ -542,7 +542,7 @@ void Restaurant::aboutProject() const {
     clearScreen();
     printHeader("ABOUT PROJECT");
     cout << "Project Name  : Smart Restaurant Management System\n";
-    cout << "Developer     : OMJI MISHRA\n";
+    cout << "Developer     : Rishabh Nayak\n";
     cout << "Language      : C++17\n";
     cout << "Data Structure: Doubly Linked List\n";
     cout << "Version       : 4.0\n";

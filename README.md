@@ -44,14 +44,15 @@
     - [Compilation Instructions](#compilation-instructions)
     - [Run Instructions](#run-instructions)
     - [Example Usage](#example-usage)
-21. [Screenshots](#screenshots)
-22. [Project Specifics](#project-specifics)
+21. [UI Previews & Console Output](#ui-previews--console-output)
+22. [Developer](#developer)
+23. [Project Specifics](#project-specifics)
     - [Dependencies](#project-dependencies)
     - [Coding Standards Followed](#coding-standards-followed)
     - [Design Decisions](#design-decisions)
     - [Assumptions](#assumptions)
     - [Known Issues](#known-issues)
-23. [Conclusion](#conclusion)
+24. [Conclusion](#conclusion)
 
 ---
 
@@ -379,13 +380,67 @@ SmartRestaurant.exe
 5. Press `8` to see the dashboard summarize your revenue.
 6. Press `11` to safely exit the system.
 
+## UI Previews & Console Output
+
+### 1. Main Navigation Menu
+```text
+===========================================
+ SMART RESTAURANT MANAGEMENT SYSTEM
+===========================================
+1. Add Order
+2. Search Order
+3. Update Order
+4. Delete Order
+5. Display Orders
+6. Update Order Status
+7. Display Orders By Status
+8. Dashboard
+9. Total Revenue
+10. About Project
+11. Exit
+===========================================
+Enter your choice: 
+```
+
+### 2. Live Dashboard Summary
+```text
+====================================================
+ SMART RESTAURANT DASHBOARD
+====================================================
+Total Orders        : 8
+Pending             : 2
+Preparing           : 1
+Ready               : 2
+Served              : 1
+Completed           : 2
+Cancelled           : 0
+
+Today's Revenue     : ₹ 3,450.00
+====================================================
+```
+
+### 3. Orders Display (Doubly Linked List Traversal)
+```text
+====================================================
+ SMART RESTAURANT MANAGEMENT SYSTEM - DISPLAY ORDERS
+====================================================
+
+Order ID  Customer            Food                Qty       Price          Bill           Status
+----------------------------------------------------------------------------------------------------
+1001      Raj                 Dark Chocolate      5         ₹150.00        ₹750.00        Pending
+1002      John Doe            Paneer Tikka        2         ₹250.00        ₹500.00        Preparing
+1003      Alice Smith         Veg Burger          3         ₹120.00        ₹360.00        Ready
+
+====================================================
+```
+
 ---
 
-## Screenshots
-*(Add screenshots here to visualize the terminal UI)*
+## Developer
 
-![Main Menu Placeholder](link_to_image)
-![Dashboard Placeholder](link_to_image)
+- **Developer:** **Rishabh Nayak**
+- **GitHub:** [@rishabhnayakk](https://github.com/rishabhnayakk)
+- **Repository:** [smart-restaurant](https://github.com/rishabhnayakk/smart-restaurant)
 
 ---
 
@@ -417,4 +472,3 @@ SmartRestaurant.exe
 
 ## Conclusion
 The Smart Restaurant Management System demonstrates a highly effective application of core Data Structures (Doubly Linked List) and Object-Oriented Programming in C++. It bridges the gap between theoretical computer science concepts and practical, real-world business utility, providing a solid foundation that can be expanded into a commercial-grade application.
-# smart-restaurant
