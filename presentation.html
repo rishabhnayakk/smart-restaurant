@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART RESTAURANT MANAGEMENT SYSTEM</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Design System - Minimalist, Lightweight, No Emojis, No Dark/Unusual Gradients */
+        :root {
+            --bg-site: #f8fafc;
+            --bg-panel: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --border-ui: #e2e8f0;
+            --border-ui-strong: #cbd5e1;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --text-muted: #64748b;
+            
+            --clr-brand: #2563eb;
+            --clr-brand-hover: #1d4ed8;
+            --clr-brand-subtle: #eff6ff;
+            --clr-success: #059669;
+            --clr-success-subtle: #ecfdf5;
+            --clr-warning: #d97706;
+            --clr-warning-subtle: #fffbeb;
+            --clr-danger: #dc2626;
+            --clr-danger-subtle: #fef2f2;
+            
+            --terminal-bg: #0f172a;
+            --terminal-text: #e2e8f0;
+            --terminal-accent: #38bdf8;
+            --terminal-border: #1e293b;
+            
+            --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            
+            --transition: all 0.15s ease-in-out;
+        }
+
+        [data-theme="dark"] {
+            --bg-site: #0b0f19;
+            --bg-panel: #111827;
+            --bg-subtle: #1f2937;
+            --border-ui: #1f2937;
+            --border-ui-strong: #374151;
+            --text-main: #f9fafb;
+            --text-sub: #9ca3af;
+            --text-muted: #6b7280;
+            
+            --clr-brand-subtle: #1e293b;
+            --clr-success-subtle: #064e3b;
+            --clr-warning-subtle: #78350f;
+            --clr-danger-subtle: #7f1d1d;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: var(--bg-site);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.5;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .app-container {
+            max-width: 1360px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Sticky Header */
+        header {
+            background-color: var(--bg-panel);
+            border-bottom: 1px solid var(--border-ui);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .brand-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .brand-badge {
+            background-color: var(--clr-brand);
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 13px;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+        
+        .brand-text h1 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.2px;
+            line-height: 1.2;
+        }
+        
+        .brand-text span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .view-pill-group {
+            display: flex;
+            background-color: var(--bg-subtle);
+            padding: 3px;
+            border-radius: var(--radius-sm);
+            gap: 2px;
+            border: 1px solid var(--border-ui);
+        }
+        
+        .view-pill-btn {
+            background: transparent;
+            border: none;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-family: var(--font-family);
+        }
+        
+        .view-pill-btn.active {
+            background-color: var(--bg-panel);
+            color: var(--clr-brand);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theme-btn {
+            background-color: var(--bg-subtle);
+            border: 1px solid var(--border-ui);
+            color: var(--text-sub);
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .theme-btn:hover {
+            background-color: var(--border-ui);
+            color: var(--text-main);
+        }
+
+        /* KPI Summary Row */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 18px 0 16px 0;
+        }
+
+        .kpi-box {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .kpi-lbl {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .kpi-val {
+            font-size: 18px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--text-main);
+            margin-top: 2px;
+        }
+
+        /* Main Workspace Grid */
+        .main-runner-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 1024px) {
+            .main-runner-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .block-card {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .block-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-ui);
+            padding-bottom: 8px;
+        }
+
+        .input-row {
+            margin-bottom: 10px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            margin-bottom: 4px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 7px 10px;
+            border: 1px solid var(--border-ui-strong);
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-panel);
+            color: var(--text-main);
+            font-size: 13px;
+            font-family: var(--font-family);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .input-field:focus {
+            border-color: var(--clr-brand);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn-ui {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            font-family: var(--font-family);
+        }
+
+        .btn-ui-brand {
+            background-color: var(--clr-brand);
+            color: #ffffff;
+        }
+
+        .btn-ui-brand:hover {
+            background-color: var(--clr-brand-hover);
+        }
+
+        .btn-ui-secondary {
+            background-color: var(--bg-subtle);
+            border-color: var(--border-ui-strong);
+            color: var(--text-main);
+        }
+
+        .btn-ui-secondary:hover {
+            background-color: var(--border-ui);
+        }
+
+        .btn-ui-danger {
+            background-color: var(--clr-danger-subtle);
+            border-color: rgba(220, 38, 38, 0.2);
+            color: var(--clr-danger);
+        }
+
+        .btn-ui-danger:hover {
+            background-color: var(--clr-danger);
+            color: #ffffff;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .preset-btn {
+            background-color: var(--bg-subtle);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-sm);
+            padding: 5px 8px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-sub);
+            cursor: pointer;
+            text-align: left;
+            transition: var(--transition);
+        }
+
+        .preset-btn:hover {
+            background-color: var(--clr-brand-subtle);
+            border-color: rgba(37, 99, 235, 0.3);
+            color: var(--clr-brand);
+        }
+
+        /* Doubly Linked List Visual Strip */
+        .node-track-wrapper {
+            background-color: var(--bg-site);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-ui);
+            min-height: 230px;
+            padding: 18px 14px;
+            overflow-x: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .empty-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-muted);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .node-element {
+            background-color: var(--bg-panel);
+            border: 1.5px solid var(--border-ui-strong);
+            border-radius: var(--radius-md);
+            width: 210px;
+            min-width: 210px;
+            padding: 10px 12px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .node-element:hover {
+            border-color: var(--clr-brand);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .node-element.selected {
+            border-color: var(--clr-warning);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+        }
+
+        .node-element.highlight-traverse {
+            border-color: var(--clr-brand);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+            background-color: var(--clr-brand-subtle);
+        }
+
+        .node-elem-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--clr-brand);
+            border-bottom: 1px solid var(--border-ui);
+            padding-bottom: 5px;
+            margin-bottom: 6px;
+            font-family: var(--font-mono);
+        }
+
+        .node-elem-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .node-elem-lbl {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .node-elem-val {
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .node-elem-val.truncate {
+            max-width: 110px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .node-elem-footer {
+            border-top: 1px solid var(--border-ui);
+            margin-top: 6px;
+            padding-top: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-pill {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 0.3px;
+        }
+
+        .status-Pending { background-color: #fef3c7; color: #b45309; }
+        .status-Preparing { background-color: #dbeafe; color: #1d4ed8; }
+        .status-Ready { background-color: #e0f2fe; color: #0369a1; }
+        .status-Served { background-color: #dcfce7; color: #15803d; }
+        .status-Completed { background-color: #f1f5f9; color: #334155; }
+        .status-Cancelled { background-color: #fee2e2; color: #b91c1c; }
+
+        .node-pointer-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            min-width: 44px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .link-line {
+            width: 32px;
+            height: 1px;
+            background-color: var(--border-ui-strong);
+            position: relative;
+        }
+
+        .link-line.next::after {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: -3px;
+            border: 3px solid transparent;
+            border-left-color: var(--border-ui-strong);
+        }
+
+        .link-line.prev::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: -3px;
+            border: 3px solid transparent;
+            border-right-color: var(--border-ui-strong);
+        }
+
+        /* Node Inspector */
+        .node-inspector-box {
+            margin-top: 10px;
+            padding: 10px 14px;
+            background-color: var(--bg-subtle);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-ui);
+            display: none;
+        }
+
+        /* Data Table */
+        .data-table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-md);
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .custom-table th {
+            background-color: var(--bg-subtle);
+            color: var(--text-main);
+            font-weight: 600;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-ui);
+            font-size: 12px;
+        }
+
+        .custom-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-ui);
+            color: var(--text-sub);
+            font-size: 12px;
+        }
+
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-table tr:hover td {
+            background-color: var(--bg-subtle);
+        }
+
+        /* CONSOLE TERMINAL EMULATOR */
+        .terminal-shell {
+            background-color: var(--terminal-bg);
+            border: 1px solid var(--terminal-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-md);
+        }
+
+        .terminal-header {
+            background-color: #0b0f19;
+            padding: 8px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--terminal-border);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background-color: #ef4444; }
+        .dot-yellow { background-color: #f59e0b; }
+        .dot-green { background-color: #10b981; }
+
+        .terminal-body {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #f1f5f9;
+            padding: 14px;
+            min-height: 440px;
+            max-height: 540px;
+            overflow-y: auto;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .terminal-quick-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 8px 14px;
+            background-color: #131b2e;
+            border-top: 1px solid var(--terminal-border);
+        }
+
+        .quick-cmd-btn {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quick-cmd-btn:hover {
+            color: #ffffff;
+            border-color: var(--terminal-accent);
+            background-color: #0284c7;
+        }
+
+        .terminal-input-row {
+            display: flex;
+            align-items: center;
+            background-color: #0b0f19;
+            border-top: 1px solid var(--terminal-border);
+            padding: 8px 14px;
+        }
+
+        .terminal-prompt {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--terminal-accent);
+            margin-right: 8px;
+            user-select: none;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #f1f5f9;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            outline: none;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-ui);
+            padding: 16px 0;
+            margin-top: auto;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        footer a {
+            color: var(--clr-brand);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- Sticky Header -->
+    <header>
+        <div class="app-container header-wrap">
+            <div class="brand-meta">
+                <div class="brand-text">
+                    <h1>SMART RESTAURANT MANAGEMENT SYSTEM</h1>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <div class="view-pill-group">
+                    <button class="view-pill-btn active" id="btn-view-visual" onclick="switchRunnerView('visual')">Visual Doubly Linked List</button>
+                    <button class="view-pill-btn" id="btn-view-terminal" onclick="switchRunnerView('terminal')">C++ Terminal Console</button>
+                </div>
+                <button class="theme-btn" onclick="toggleTheme()" id="theme-btn-text">Dark Theme</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container" style="flex: 1; padding-top: 4px; padding-bottom: 24px;">
+
+        <!-- Live KPI Metric Row (README Section 21.2) -->
+        <div class="kpi-row">
+            <div class="kpi-box">
+                <div class="kpi-lbl">Total Orders</div>
+                <div class="kpi-val" id="kpi-total">0</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-lbl">Pending</div>
+                <div class="kpi-val" id="kpi-pending">0</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-lbl">Preparing</div>
+                <div class="kpi-val" id="kpi-prep">0</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-lbl">Ready</div>
+                <div class="kpi-val" id="kpi-ready">0</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-lbl">Served</div>
+                <div class="kpi-val" id="kpi-served">0</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-lbl">Completed</div>
+                <div class="kpi-val" id="kpi-comp">0</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-lbl">Cancelled</div>
+                <div class="kpi-val" id="kpi-cancelled">0</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-lbl">Today's Revenue</div>
+                <div class="kpi-val" id="kpi-rev" style="color:var(--clr-brand);">Rs. 0.00</div>
+            </div>
+        </div>
+
+        <!-- VIEW 1: VISUAL DOUBLY LINKED LIST RUNNER -->
+        <div id="runner-visual-section" style="display: block;">
+            <div class="main-runner-grid">
+                
+                <!-- Left Control Column -->
+                <div>
+                    
+                    <!-- 1. Add Order Card (README Section 13 Menu Option 1) -->
+                    <div class="block-card">
+                        <div class="block-title">
+                            <span>1. Add Order (O(1) Tail Append)</span>
+                        </div>
+                        
+                        <span class="input-label" style="margin-bottom:6px;">Sample Presets</span>
+                        <div class="preset-grid">
+                            <button class="preset-btn" onclick="seedPreset('Raj', 'Dark Chocolate', 5, 150)">Raj &bull; Chocolate</button>
+                            <button class="preset-btn" onclick="seedPreset('rishabh', 'biryani', 2, 100)">rishabh &bull; biryani</button>
+                            <button class="preset-btn" onclick="seedPreset('Rishabh', 'biryani', 11, 100)">Rishabh &bull; biryani</button>
+                            <button class="preset-btn" onclick="seedPreset('Alice Smith', 'Paneer Tikka', 3, 220)">Alice &bull; Tikka</button>
+                        </div>
+
+                        <form id="form-add-order" onsubmit="event.preventDefault(); handleAddOrderSubmit();">
+                            <div class="input-row">
+                                <label class="input-label">Customer Name</label>
+                                <input type="text" id="add-cust-name" class="input-field" placeholder="e.g. John Doe" required>
+                            </div>
+                            <div class="input-row">
+                                <label class="input-label">Food Item</label>
+                                <input type="text" id="add-food-name" class="input-field" placeholder="e.g. Veg Burger" required>
+                            </div>
+                            <div class="input-row" style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                                <div>
+                                    <label class="input-label">Quantity</label>
+                                    <input type="number" id="add-qty" class="input-field" value="2" min="1" max="999" required>
+                                </div>
+                                <div>
+                                    <label class="input-label">Unit Price (Rs.)</label>
+                                    <input type="number" id="add-price" class="input-field" value="150" min="1" step="0.5" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-ui btn-ui-brand">Append Node to Tail</button>
+                        </form>
+                    </div>
+
+                    <!-- 2. Node Operations Card (Search, Status Update, Delete) -->
+                    <div class="block-card">
+                        <div class="block-title">
+                            <span>Node Operations (Search &bull; Update &bull; Delete)</span>
+                        </div>
+                        <div class="input-row">
+                            <label class="input-label">Target Order ID</label>
+                            <div style="display:flex; gap:6px;">
+                                <input type="number" id="target-id" class="input-field" placeholder="Select node or enter ID">
+                                <button class="btn-ui btn-ui-secondary" style="width:auto; padding:0 12px;" onclick="searchOrderPrompt()">Find</button>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <label class="input-label">Update Status</label>
+                            <select id="update-status-val" class="input-field">
+                                <option value="Pending">Pending</option>
+                                <option value="Preparing">Preparing</option>
+                                <option value="Ready">Ready</option>
+                                <option value="Served">Served</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                            <button class="btn-ui btn-ui-secondary" onclick="handleUpdateStatusSubmit()">Update Order Status</button>
+                            <button class="btn-ui btn-ui-danger" onclick="handleDeleteOrderSubmit()">Delete Node (O(1)* Bypass)</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Visual Column -->
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    
+                    <!-- Visual Node Strip Card -->
+                    <div class="block-card" style="margin-bottom:0;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                            <span style="font-weight:600; font-size:13px; font-family:var(--font-mono); color:var(--text-sub);" id="ptr-status-lbl">
+                                HEAD: NULL &bull; TAIL: NULL
+                            </span>
+                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                                <button class="btn-ui btn-ui-secondary" style="width:auto; padding:4px 8px; font-size:11px;" onclick="runVisualTraversal('forward')">Forward Traversal</button>
+                                <button class="btn-ui btn-ui-secondary" style="width:auto; padding:4px 8px; font-size:11px;" onclick="runVisualTraversal('backward')">Backward Traversal</button>
+                                <button class="btn-ui btn-ui-secondary" style="width:auto; padding:4px 8px; font-size:11px;" onclick="exportOrdersTxtFile()">Export orders.txt</button>
+                                <button class="btn-ui btn-ui-secondary" style="width:auto; padding:4px 8px; font-size:11px;" onclick="resetToInitialData()">Reset</button>
+                            </div>
+                        </div>
+
+                        <!-- Track where nodes are drawn -->
+                        <div class="node-track-wrapper" id="dll-node-track">
+                            <div class="empty-indicator">
+                                No active orders in Doubly Linked List.<br>Click a preset to insert nodes.
+                            </div>
+                        </div>
+
+                        <!-- Selected Node Inspector -->
+                        <div class="node-inspector-box" id="node-inspector">
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+                                <strong style="color:var(--clr-brand);" id="insp-title">Node Selected: None</strong>
+                                <span style="font-size:11px; color:var(--text-muted); font-family:var(--font-mono);" id="insp-ptr">prev: NULL &bull; next: NULL</span>
+                            </div>
+                            <div style="font-size:12px; color:var(--text-sub); margin-top:4px;" id="insp-desc">
+                                Details load here.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Orders Table (README Section 19 & 21.3) -->
+                    <div class="block-card" style="margin-bottom:0;">
+                        <div class="block-title">
+                            <span>Live Orders Table (README Display Format)</span>
+                            <span style="font-size:11px; font-weight:normal; color:var(--text-muted);">In-Memory DLL Traversal</span>
+                        </div>
+                        <div class="data-table-wrap">
+                            <table class="custom-table" id="orders-summary-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer Name</th>
+                                        <th>Food Item</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Total Bill</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-table-tbody">
+                                    <!-- Rows populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- VIEW 2: C++ CONSOLE TERMINAL RUNNER (README 11-Option Menu) -->
+        <div id="runner-terminal-section" style="display: none;">
+            <div class="terminal-shell">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <span style="font-family:var(--font-mono); font-size:12px; color:#94a3b8;">
+                        ./SmartRestaurant &bull; C++17 Terminal Menu Emulator
+                    </span>
+                    <span style="font-size:11px; color:#64748b; font-family:var(--font-mono);">
+                        Synced with orders.txt
+                    </span>
+                </div>
+
+                <!-- 11 Menu Quick Command Buttons from README -->
+                <div class="terminal-quick-bar">
+                    <span style="font-size:11px; color:#94a3b8; align-self:center; margin-right:4px;">Quick Options:</span>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('1')">1. Add Order</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('2')">2. Search Order</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('3')">3. Update Order</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('4')">4. Delete Order</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('5')">5. Display Orders</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('6')">6. Update Status</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('7')">7. Filter Status</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('8')">8. Dashboard</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('9')">9. Total Revenue</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('10')">10. About</button>
+                    <button class="quick-cmd-btn" onclick="executeTerminalCommand('clear')">clear</button>
+                </div>
+
+                <!-- Terminal Body Output -->
+                <div class="terminal-body" id="term-output">
+===========================================
+ SMART RESTAURANT MANAGEMENT SYSTEM
+===========================================
+1. Add Order
+2. Search Order
+3. Update Order
+4. Delete Order
+5. Display Orders
+6. Update Order Status
+7. Display Orders By Status
+8. Dashboard
+9. Total Revenue
+10. About Project
+11. Exit
+===========================================
+Enter your choice: 
+                </div>
+
+                <!-- Terminal Command Line Input -->
+                <div class="terminal-input-row">
+                    <span class="terminal-prompt">$ choice &gt;</span>
+                    <input type="text" id="term-input" class="terminal-input" placeholder="Type menu option (1-11) and press Enter..." autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="app-container">
+            <p>Smart Restaurant Management System &bull; C++17 Core &bull; Developed by <strong>Rishabh Nayak</strong> (<a href="https://github.com/rishabhnayakk" target="_blank">@rishabhnayakk</a>)</p>
+        </div>
+    </footer>
+
+    <!-- In-Memory Doubly Linked List Engine & Interactive Logic -->
+    <script>
+        // ==========================================
+        // UI & Theme Management
+        // ==========================================
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', targetTheme);
+            const btn = document.getElementById('theme-btn-text');
+            if (btn) btn.innerText = targetTheme === 'dark' ? 'Light Theme' : 'Dark Theme';
+        }
+
+        function switchRunnerView(viewName) {
+            document.getElementById('btn-view-visual').classList.toggle('active', viewName === 'visual');
+            document.getElementById('btn-view-terminal').classList.toggle('active', viewName === 'terminal');
+            
+            document.getElementById('runner-visual-section').style.display = viewName === 'visual' ? 'block' : 'none';
+            document.getElementById('runner-terminal-section').style.display = viewName === 'terminal' ? 'block' : 'none';
+
+            if (viewName === 'terminal') {
+                const inp = document.getElementById('term-input');
+                if (inp) inp.focus();
+            }
+        }
+
+        // ==========================================
+        // In-Memory Doubly Linked List State
+        // Exact initial seed matching project's orders.txt
+        // ==========================================
+        const STORAGE_KEY = 'smart_restaurant_orders_state_v2';
+        
+        const DEFAULT_SEED_DATA = [
+            { id: 1001, name: "Raj", food: "Dark Chocolate", qty: 5, price: 150.0, total: 750.0, status: "Pending" },
+            { id: 1002, name: "rishabh", food: "biryani", qty: 2, price: 100.0, total: 200.0, status: "Pending" },
+            { id: 1003, name: "Rishabh", food: "biryani", qty: 11, price: 100.0, total: 1100.0, status: "Pending" }
+        ];
+
+        let orders = [];
+
+        function loadInitialOrders() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        return parsed;
+                    }
+                } catch (e) {}
+            }
+            return JSON.parse(JSON.stringify(DEFAULT_SEED_DATA));
+        }
+
+        function persistOrdersLocally() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+            } catch (e) {}
+        }
+
+        function resetToInitialData() {
+            orders = JSON.parse(JSON.stringify(DEFAULT_SEED_DATA));
+            persistOrdersLocally();
+            renderAllViews();
+        }
+
+        // ==========================================
+        // Visual Rendering Engine
+        // ==========================================
+        function renderAllViews() {
+            renderKpis();
+            renderNodeTrack();
+            renderOrdersTable();
+        }
+
+        function renderKpis() {
+            const total = orders.length;
+            const pending = orders.filter(o => o.status === 'Pending').length;
+            const preparing = orders.filter(o => o.status === 'Preparing').length;
+            const ready = orders.filter(o => o.status === 'Ready').length;
+            const served = orders.filter(o => o.status === 'Served').length;
+            const completed = orders.filter(o => o.status === 'Completed').length;
+            const cancelled = orders.filter(o => o.status === 'Cancelled').length;
+            const revenue = orders.reduce((sum, o) => sum + (o.qty * o.price), 0);
+
+            document.getElementById('kpi-total').innerText = total;
+            document.getElementById('kpi-pending').innerText = pending;
+            document.getElementById('kpi-prep').innerText = preparing;
+            document.getElementById('kpi-ready').innerText = ready;
+            document.getElementById('kpi-served').innerText = served;
+            document.getElementById('kpi-comp').innerText = completed;
+            document.getElementById('kpi-cancelled').innerText = cancelled;
+            document.getElementById('kpi-rev').innerText = `Rs. ${revenue.toFixed(2)}`;
+        }
+
+        function renderNodeTrack() {
+            const track = document.getElementById('dll-node-track');
+            const ptrLabel = document.getElementById('ptr-status-lbl');
+
+            if (orders.length === 0) {
+                track.innerHTML = `<div class="empty-indicator">No active orders in Doubly Linked List.<br>Click a preset to insert nodes.</div>`;
+                ptrLabel.innerText = "HEAD: NULL \u2022 TAIL: NULL";
+                document.getElementById('node-inspector').style.display = 'none';
+                return;
+            }
+
+            ptrLabel.innerText = `HEAD: Node #${orders[0].id} \u2022 TAIL: Node #${orders[orders.length - 1].id} \u2022 Size: ${orders.length}`;
+            track.innerHTML = '';
+
+            orders.forEach((o, index) => {
+                const box = document.createElement('div');
+                box.className = 'node-element';
+                box.id = `node-box-${o.id}`;
+                box.onclick = () => selectNode(o.id);
+
+                const bill = (o.qty * o.price).toFixed(2);
+
+                box.innerHTML = `
+                    <div class="node-elem-header">
+                        <span>Node #${o.id}</span>
+                        <span>[${index === 0 ? 'HEAD' : (index === orders.length - 1 ? 'TAIL' : 'NODE')}]</span>
+                    </div>
+                    <div class="node-elem-row">
+                        <span class="node-elem-lbl">Customer:</span>
+                        <span class="node-elem-val truncate">${o.name}</span>
+                    </div>
+                    <div class="node-elem-row">
+                        <span class="node-elem-lbl">Food Item:</span>
+                        <span class="node-elem-val truncate">${o.food}</span>
+                    </div>
+                    <div class="node-elem-row">
+                        <span class="node-elem-lbl">Quantity:</span>
+                        <span class="node-elem-val">${o.qty} &times; Rs. ${o.price.toFixed(2)}</span>
+                    </div>
+                    <div class="node-elem-footer">
+                        <span class="status-pill status-${o.status}">${o.status}</span>
+                        <span style="font-weight:700; color:var(--clr-brand); font-size:12px;">Rs. ${bill}</span>
+                    </div>
+                `;
+                track.appendChild(box);
+
+                // Add bidirectional pointer separator
+                if (index < orders.length - 1) {
+                    const link = document.createElement('div');
+                    link.className = 'node-pointer-link';
+                    link.innerHTML = `
+                        <span>next &rarr;</span>
+                        <div class="link-line next prev"></div>
+                        <span style="margin-top:-2px;">&larr; prev</span>
+                    `;
+                    track.appendChild(link);
+                }
+            });
+        }
+
+        function renderOrdersTable() {
+            const tbody = document.getElementById('orders-table-tbody');
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:16px;">No orders currently in memory.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            orders.forEach(o => {
+                const bill = (o.qty * o.price).toFixed(2);
+                html += `
+                    <tr>
+                        <td style="font-family:var(--font-mono); font-weight:600; color:var(--clr-brand);">${o.id}</td>
+                        <td>${o.name}</td>
+                        <td>${o.food}</td>
+                        <td>${o.qty}</td>
+                        <td>Rs. ${o.price.toFixed(2)}</td>
+                        <td style="font-weight:600;">Rs. ${bill}</td>
+                        <td><span class="status-pill status-${o.status}">${o.status}</span></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function selectNode(id) {
+            document.querySelectorAll('.node-element').forEach(el => el.classList.remove('selected'));
+            const targetEl = document.getElementById(`node-box-${id}`);
+            if (targetEl) targetEl.classList.add('selected');
+
+            document.getElementById('target-id').value = id;
+
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                document.getElementById('update-status-val').value = order.status;
+                const index = orders.indexOf(order);
+                const prevId = index > 0 ? `#${orders[index - 1].id}` : 'NULL';
+                const nextId = index < orders.length - 1 ? `#${orders[index + 1].id}` : 'NULL';
+
+                const inspector = document.getElementById('node-inspector');
+                inspector.style.display = 'block';
+                document.getElementById('insp-title').innerText = `Node #${order.id}: ${order.name} (${order.food})`;
+                document.getElementById('insp-ptr').innerText = `prev: ${prevId} \u2022 next: ${nextId}`;
+                document.getElementById('insp-desc').innerText = `Quantity: ${order.qty} | Price: Rs. ${order.price.toFixed(2)} | Total Bill: Rs. ${(order.qty * order.price).toFixed(2)} | Status: ${order.status}`;
+            }
+        }
+
+        // ==========================================
+        // Visual CRUD Handlers
+        // ==========================================
+        function seedPreset(name, food, qty, price) {
+            document.getElementById('add-cust-name').value = name;
+            document.getElementById('add-food-name').value = food;
+            document.getElementById('add-qty').value = qty;
+            document.getElementById('add-price').value = price;
+            handleAddOrderSubmit();
+        }
+
+        function handleAddOrderSubmit() {
+            const name = document.getElementById('add-cust-name').value.trim();
+            const food = document.getElementById('add-food-name').value.trim();
+            const qty = parseInt(document.getElementById('add-qty').value) || 1;
+            const price = parseFloat(document.getElementById('add-price').value) || 100.0;
+
+            if (!name || !food) {
+                alert('Please enter both Customer Name and Food Item.');
+                return;
+            }
+
+            const maxId = orders.reduce((max, o) => Math.max(max, o.id), 1000);
+            const newId = maxId + 1;
+            const totalBill = qty * price;
+
+            const newOrder = {
+                id: newId,
+                name: name,
+                food: food,
+                qty: qty,
+                price: price,
+                total: totalBill,
+                status: 'Pending'
+            };
+
+            // O(1) Tail Insertion
+            orders.push(newOrder);
+            persistOrdersLocally();
+            renderAllViews();
+            selectNode(newId);
+
+            document.getElementById('form-add-order').reset();
+            document.getElementById('add-qty').value = 2;
+            document.getElementById('add-price').value = 150;
+
+            setTimeout(() => {
+                const track = document.getElementById('dll-node-track');
+                if (track) track.scrollLeft = track.scrollWidth;
+            }, 50);
+        }
+
+        function handleUpdateStatusSubmit() {
+            const id = parseInt(document.getElementById('target-id').value);
+            const newStatus = document.getElementById('update-status-val').value;
+
+            if (isNaN(id)) {
+                alert('Please enter or select a valid Order ID.');
+                return;
+            }
+
+            const order = orders.find(o => o.id === id);
+            if (!order) {
+                alert(`Order #${id} not found.`);
+                return;
+            }
+
+            order.status = newStatus;
+            persistOrdersLocally();
+            renderAllViews();
+            selectNode(id);
+        }
+
+        function handleDeleteOrderSubmit() {
+            const id = parseInt(document.getElementById('target-id').value);
+            if (isNaN(id)) {
+                alert('Please enter or select a valid Order ID.');
+                return;
+            }
+
+            const index = orders.findIndex(o => o.id === id);
+            if (index === -1) {
+                alert(`Order #${id} not found.`);
+                return;
+            }
+
+            // O(1)* Pointer Bypass Simulation
+            orders.splice(index, 1);
+            persistOrdersLocally();
+            renderAllViews();
+            document.getElementById('target-id').value = '';
+            document.getElementById('node-inspector').style.display = 'none';
+        }
+
+        function searchOrderPrompt() {
+            const id = parseInt(document.getElementById('target-id').value);
+            if (isNaN(id)) {
+                alert('Please enter an Order ID to search.');
+                return;
+            }
+
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                selectNode(id);
+                const el = document.getElementById(`node-box-${id}`);
+                if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            } else {
+                alert(`Order #${id} not found.`);
+            }
+        }
+
+        async function runVisualTraversal(direction) {
+            if (orders.length === 0) return;
+            document.querySelectorAll('.node-element').forEach(el => el.classList.remove('selected', 'highlight-traverse'));
+
+            let sequence = [...orders];
+            if (direction === 'backward') sequence.reverse();
+
+            for (let i = 0; i < sequence.length; i++) {
+                const node = sequence[i];
+                const el = document.getElementById(`node-box-${node.id}`);
+                if (el) {
+                    el.classList.add('highlight-traverse');
+                    el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    await new Promise(r => setTimeout(r, 600));
+                    el.classList.remove('highlight-traverse');
+                }
+            }
+        }
+
+        function exportOrdersTxtFile() {
+            let csv = "";
+            orders.forEach(o => {
+                const bill = (o.qty * o.price).toFixed(2);
+                csv += `${o.id},${o.name},${o.food},${o.qty},${o.price},${bill},${o.status}\n`;
+            });
+            const blob = new Blob([csv], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "orders.txt";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ==========================================
+        // C++ CONSOLE TERMINAL EMULATOR
+        // Reproduces exact README 11-Option Menu Flow
+        // ==========================================
+        const termOutput = document.getElementById('term-output');
+        const termInput = document.getElementById('term-input');
+
+        const MENU_HEADER = `===========================================
+ SMART RESTAURANT MANAGEMENT SYSTEM
+===========================================
+1. Add Order
+2. Search Order
+3. Update Order
+4. Delete Order
+5. Display Orders
+6. Update Order Status
+7. Display Orders By Status
+8. Dashboard
+9. Total Revenue
+10. About Project
+11. Exit
+===========================================
+Enter your choice: `;
+
+        let terminalState = 'MENU';
+        let termPendingData = {};
+
+        function printTerm(text, newline = true) {
+            termOutput.textContent += text + (newline ? '\n' : '');
+            termOutput.scrollTop = termOutput.scrollHeight;
+        }
+
+        function clearTerminal() {
+            termOutput.textContent = '';
+        }
+
+        function printMenu() {
+            printTerm('\n' + MENU_HEADER, false);
+            terminalState = 'MENU';
+            termPendingData = {};
+        }
+
+        function executeTerminalCommand(cmd) {
+            termInput.value = cmd;
+            handleTerminalSubmit();
+        }
+
+        function handleTerminalSubmit() {
+            const raw = termInput.value.trim();
+            termInput.value = '';
+
+            if (terminalState === 'MENU') {
+                printTerm(` ${raw}\n`);
+                processMenuSelection(raw);
+            } else if (terminalState.startsWith('ADD_')) {
+                processAddOrderStep(raw);
+            } else if (terminalState === 'SEARCH') {
+                processSearchStep(raw);
+            } else if (terminalState.startsWith('UPDATE_')) {
+                processUpdateStep(raw);
+            } else if (terminalState === 'DELETE') {
+                processDeleteStep(raw);
+            } else if (terminalState.startsWith('STATUS_')) {
+                processStatusStep(raw);
+            } else if (terminalState === 'FILTER') {
+                processFilterStep(raw);
+            }
+        }
+
+        function processMenuSelection(choice) {
+            switch (choice) {
+                case '1':
+                    terminalState = 'ADD_NAME';
+                    printTerm('====================================================');
+                    printTerm(' SMART RESTAURANT MANAGEMENT SYSTEM - ADD ORDER');
+                    printTerm('====================================================');
+                    printTerm('Enter Customer Name: ', false);
+                    break;
+                case '2':
+                    terminalState = 'SEARCH';
+                    printTerm('====================================================');
+                    printTerm(' SMART RESTAURANT MANAGEMENT SYSTEM - SEARCH ORDER');
+                    printTerm('====================================================');
+                    printTerm('Enter Order ID to search: ', false);
+                    break;
+                case '3':
+                    terminalState = 'UPDATE_ID';
+                    printTerm('====================================================');
+                    printTerm(' SMART RESTAURANT MANAGEMENT SYSTEM - UPDATE ORDER');
+                    printTerm('====================================================');
+                    printTerm('Enter Order ID to update: ', false);
+                    break;
+                case '4':
+                    terminalState = 'DELETE';
+                    printTerm('====================================================');
+                    printTerm(' SMART RESTAURANT MANAGEMENT SYSTEM - DELETE ORDER');
+                    printTerm('====================================================');
+                    printTerm('Enter Order ID to delete: ', false);
+                    break;
+                case '5':
+                    displayTerminalOrders(orders);
+                    printMenu();
+                    break;
+                case '6':
+                    terminalState = 'STATUS_ID';
+                    printTerm('====================================================');
+                    printTerm(' SMART RESTAURANT - UPDATE ORDER STATUS');
+                    printTerm('====================================================');
+                    printTerm('Enter Order ID to update status: ', false);
+                    break;
+                case '7':
+                    terminalState = 'FILTER';
+                    printTerm('====================================================');
+                    printTerm(' SMART RESTAURANT - DISPLAY ORDERS BY STATUS');
+                    printTerm('====================================================');
+                    printTerm('1. Pending | 2. Preparing | 3. Ready | 4. Served | 5. Completed | 6. Cancelled');
+                    printTerm('Enter choice (1-6) or status name: ', false);
+                    break;
+                case '8':
+                    displayTerminalDashboard();
+                    printMenu();
+                    break;
+                case '9':
+                    displayTerminalRevenue();
+                    printMenu();
+                    break;
+                case '10':
+                    printTerm('====================================================');
+                    printTerm(' ABOUT SMART RESTAURANT MANAGEMENT SYSTEM');
+                    printTerm('====================================================');
+                    printTerm('Developer : Rishabh Nayak');
+                    printTerm('GitHub    : https://github.com/rishabhnayakk');
+                    printTerm('Project   : smart-restaurant');
+                    printTerm('Core DS   : Doubly Linked List in C++17');
+                    printTerm('Storage   : orders.txt (Flat CSV Persistence)');
+                    printTerm('====================================================');
+                    printMenu();
+                    break;
+                case '11':
+                    printTerm('====================================================');
+                    printTerm(' Thank you for using Smart Restaurant Management System!');
+                    printTerm(' Destructor: Freeing all allocated heap nodes from RAM.');
+                    printTerm(' Data successfully persisted to orders.txt.');
+                    printTerm(' Program terminated safely.');
+                    printTerm('====================================================');
+                    setTimeout(() => printMenu(), 2500);
+                    break;
+                case 'cls':
+                case 'clear':
+                    clearTerminal();
+                    printMenu();
+                    break;
+                default:
+                    printTerm('Invalid choice. Please select an option between 1 and 11.');
+                    printMenu();
+                    break;
+            }
+        }
+
+        function displayTerminalOrders(list) {
+            printTerm('====================================================');
+            printTerm(' SMART RESTAURANT MANAGEMENT SYSTEM - DISPLAY ORDERS');
+            printTerm('====================================================\n');
+            printTerm(formatOrdersAsciiTable(list));
+            printTerm('====================================================');
+        }
+
+        function formatOrdersAsciiTable(list) {
+            if (list.length === 0) {
+                return 'No orders found in the system.\n';
+            }
+
+            let header = 'Order ID  Customer            Food                Qty       Price          Bill           Status\n';
+            header += '----------------------------------------------------------------------------------------------------';
+            let rows = [header];
+
+            list.forEach(o => {
+                const idStr = String(o.id).padEnd(10, ' ');
+                const custStr = o.name.substring(0, 18).padEnd(20, ' ');
+                const foodStr = o.food.substring(0, 18).padEnd(20, ' ');
+                const qtyStr = String(o.qty).padEnd(10, ' ');
+                const priceStr = `Rs. ${o.price.toFixed(2)}`.padEnd(15, ' ');
+                const billStr = `Rs. ${(o.qty * o.price).toFixed(2)}`.padEnd(15, ' ');
+                const statusStr = o.status;
+                rows.push(`${idStr}${custStr}${foodStr}${qtyStr}${priceStr}${billStr}${statusStr}`);
+            });
+
+            return rows.join('\n');
+        }
+
+        function displayTerminalDashboard() {
+            const total = orders.length;
+            const pending = orders.filter(o => o.status === 'Pending').length;
+            const prep = orders.filter(o => o.status === 'Preparing').length;
+            const ready = orders.filter(o => o.status === 'Ready').length;
+            const served = orders.filter(o => o.status === 'Served').length;
+            const completed = orders.filter(o => o.status === 'Completed').length;
+            const cancelled = orders.filter(o => o.status === 'Cancelled').length;
+            const rev = orders.reduce((sum, o) => sum + (o.qty * o.price), 0);
+
+            printTerm('====================================================');
+            printTerm(' SMART RESTAURANT DASHBOARD');
+            printTerm('====================================================');
+            printTerm(`Total Orders        : ${total}`);
+            printTerm(`Pending             : ${pending}`);
+            printTerm(`Preparing           : ${prep}`);
+            printTerm(`Ready               : ${ready}`);
+            printTerm(`Served              : ${served}`);
+            printTerm(`Completed           : ${completed}`);
+            printTerm(`Cancelled           : ${cancelled}\n`);
+            printTerm(`Today's Revenue     : Rs. ${rev.toFixed(2)}`);
+            printTerm('====================================================');
+        }
+
+        function displayTerminalRevenue() {
+            const rev = orders.reduce((sum, o) => sum + (o.qty * o.price), 0);
+            printTerm('====================================================');
+            printTerm(' SMART RESTAURANT - TOTAL REVENUE');
+            printTerm('====================================================');
+            printTerm(`Total Orders Processed : ${orders.length}`);
+            printTerm(`Cumulative Revenue     : Rs. ${rev.toFixed(2)}`);
+            printTerm('====================================================');
+        }
+
+        function processAddOrderStep(val) {
+            printTerm(` ${val}`);
+            if (terminalState === 'ADD_NAME') {
+                if (!val) { printTerm('Name cannot be empty. Enter Customer Name: ', false); return; }
+                termPendingData.name = val;
+                terminalState = 'ADD_FOOD';
+                printTerm('Enter Food Item: ', false);
+            } else if (terminalState === 'ADD_FOOD') {
+                if (!val) { printTerm('Food item cannot be empty. Enter Food Item: ', false); return; }
+                termPendingData.food = val;
+                terminalState = 'ADD_QTY';
+                printTerm('Enter Quantity: ', false);
+            } else if (terminalState === 'ADD_QTY') {
+                const qty = parseInt(val);
+                if (isNaN(qty) || qty <= 0) { printTerm('Invalid quantity. Enter positive number: ', false); return; }
+                termPendingData.qty = qty;
+                terminalState = 'ADD_PRICE';
+                printTerm('Enter Price per unit (Rs.): ', false);
+            } else if (terminalState === 'ADD_PRICE') {
+                const price = parseFloat(val);
+                if (isNaN(price) || price <= 0) { printTerm('Invalid price. Enter valid price: ', false); return; }
+                termPendingData.price = price;
+
+                const maxId = orders.reduce((max, o) => Math.max(max, o.id), 1000);
+                const newId = maxId + 1;
+                const total = termPendingData.qty * termPendingData.price;
+
+                const newOrder = {
+                    id: newId,
+                    name: termPendingData.name,
+                    food: termPendingData.food,
+                    qty: termPendingData.qty,
+                    price: termPendingData.price,
+                    total: total,
+                    status: 'Pending'
+                };
+
+                orders.push(newOrder);
+                persistOrdersLocally();
+                renderAllViews();
+
+                printTerm('\nOrder Added Successfully!');
+                printTerm(`Generated Order ID : ${newId}`);
+                printTerm(`Total Bill         : Rs. ${total.toFixed(2)}`);
+                printTerm('Status             : Pending');
+                printTerm('Synced with orders.txt\n');
+                printMenu();
+            }
+        }
+
+        function processSearchStep(val) {
+            printTerm(` ${val}\n`);
+            const id = parseInt(val);
+            if (isNaN(id)) {
+                printTerm('Invalid ID entered.\n');
+            } else {
+                const o = orders.find(x => x.id === id);
+                if (o) {
+                    printTerm(`Order Found!`);
+                    printTerm(`Order ID   : ${o.id}`);
+                    printTerm(`Customer   : ${o.name}`);
+                    printTerm(`Food Item  : ${o.food}`);
+                    printTerm(`Quantity   : ${o.qty}`);
+                    printTerm(`Price      : Rs. ${o.price.toFixed(2)}`);
+                    printTerm(`Total Bill : Rs. ${(o.qty * o.price).toFixed(2)}`);
+                    printTerm(`Status     : ${o.status}\n`);
+                } else {
+                    printTerm(`Order ID ${id} not found in Doubly Linked List.\n`);
+                }
+            }
+            printMenu();
+        }
+
+        function processUpdateStep(val) {
+            printTerm(` ${val}`);
+            if (terminalState === 'UPDATE_ID') {
+                const id = parseInt(val);
+                const o = orders.find(x => x.id === id);
+                if (!o) {
+                    printTerm(`Order ID ${val} not found.\n`);
+                    printMenu();
+                    return;
+                }
+                termPendingData = { target: o };
+                terminalState = 'UPDATE_NAME';
+                printTerm(`Updating Order #${o.id}.`);
+                printTerm(`Enter New Customer Name (current: "${o.name}"): `, false);
+            } else if (terminalState === 'UPDATE_NAME') {
+                termPendingData.name = val || termPendingData.target.name;
+                terminalState = 'UPDATE_FOOD';
+                printTerm(`Enter New Food Item (current: "${termPendingData.target.food}"): `, false);
+            } else if (terminalState === 'UPDATE_FOOD') {
+                termPendingData.food = val || termPendingData.target.food;
+                terminalState = 'UPDATE_QTY';
+                printTerm(`Enter New Quantity (current: ${termPendingData.target.qty}): `, false);
+            } else if (terminalState === 'UPDATE_QTY') {
+                termPendingData.qty = parseInt(val) || termPendingData.target.qty;
+                terminalState = 'UPDATE_PRICE';
+                printTerm(`Enter New Price (current: ${termPendingData.target.price}): `, false);
+            } else if (terminalState === 'UPDATE_PRICE') {
+                termPendingData.price = parseFloat(val) || termPendingData.target.price;
+
+                termPendingData.target.name = termPendingData.name;
+                termPendingData.target.food = termPendingData.food;
+                termPendingData.target.qty = termPendingData.qty;
+                termPendingData.target.price = termPendingData.price;
+                termPendingData.target.total = termPendingData.qty * termPendingData.price;
+
+                persistOrdersLocally();
+                renderAllViews();
+                printTerm(`\nOrder #${termPendingData.target.id} Updated Successfully and saved to orders.txt!\n`);
+                printMenu();
+            }
+        }
+
+        function processDeleteStep(val) {
+            printTerm(` ${val}\n`);
+            const id = parseInt(val);
+            if (isNaN(id)) {
+                printTerm('Invalid ID entered.\n');
+            } else {
+                const idx = orders.findIndex(x => x.id === id);
+                if (idx !== -1) {
+                    orders.splice(idx, 1);
+                    persistOrdersLocally();
+                    renderAllViews();
+                    printTerm(`Order #${id} deleted from heap memory and unlinked successfully.\n`);
+                } else {
+                    printTerm(`Order ID ${id} not found.\n`);
+                }
+            }
+            printMenu();
+        }
+
+        function processStatusStep(val) {
+            printTerm(` ${val}`);
+            if (terminalState === 'STATUS_ID') {
+                const id = parseInt(val);
+                const o = orders.find(x => x.id === id);
+                if (!o) {
+                    printTerm(`Order ID ${val} not found.\n`);
+                    printMenu();
+                    return;
+                }
+                termPendingData = { target: o };
+                terminalState = 'STATUS_SELECT';
+                printTerm(`Current Status of Order #${o.id}: ${o.status}`);
+                printTerm('Select New Status:');
+                printTerm('1. Pending | 2. Preparing | 3. Ready | 4. Served | 5. Completed | 6. Cancelled');
+                printTerm('Enter choice (1-6): ', false);
+            } else if (terminalState === 'STATUS_SELECT') {
+                const map = {
+                    '1': 'Pending', '2': 'Preparing', '3': 'Ready',
+                    '4': 'Served', '5': 'Completed', '6': 'Cancelled',
+                    'pending': 'Pending', 'preparing': 'Preparing', 'ready': 'Ready',
+                    'served': 'Served', 'completed': 'Completed', 'cancelled': 'Cancelled'
+                };
+                const mapped = map[val.toLowerCase()];
+                if (mapped) {
+                    termPendingData.target.status = mapped;
+                    persistOrdersLocally();
+                    renderAllViews();
+                    printTerm(`\nOrder #${termPendingData.target.id} status updated to [${mapped}]. Persisted to orders.txt.\n`);
+                } else {
+                    printTerm('\nInvalid status option. Status unchanged.\n');
+                }
+                printMenu();
+            }
+        }
+
+        function processFilterStep(val) {
+            printTerm(` ${val}\n`);
+            const map = {
+                '1': 'Pending', '2': 'Preparing', '3': 'Ready',
+                '4': 'Served', '5': 'Completed', '6': 'Cancelled',
+                'pending': 'Pending', 'preparing': 'Preparing', 'ready': 'Ready',
+                'served': 'Served', 'completed': 'Completed', 'cancelled': 'Cancelled'
+            };
+            const targetStatus = map[val.toLowerCase()];
+            if (!targetStatus) {
+                printTerm('Invalid status selected.\n');
+            } else {
+                const matches = orders.filter(o => o.status === targetStatus);
+                printTerm(`Matching Orders with Status: [${targetStatus}] (${matches.length} found)\n`);
+                displayTerminalOrders(matches);
+            }
+            printMenu();
+        }
+
+        termInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                handleTerminalSubmit();
+            }
+        });
+
+        // Initialize application
+        orders = loadInitialOrders();
+        renderAllViews();
+    </script>
+</body>
+</html>
